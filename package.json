@@ -1,0 +1,15 @@
+{
+  "name": "voice-assistant",
+  "version": "1.0.0",
+  "description": "Voice assistant: wake word → STT → Claude → TTS",
+  "type": "module",
+  "scripts": {
+    "start": "node voice-assistant.js",
+    "test-wake": "tools-python wake-listener.py",
+    "test-stt": "node -e \"import('./voice-assistant.js').then(m => m.testSTT())\"",
+    "test-tts": "say 'Hello, this is a test of the voice assistant.'"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.2.75"
+  }
+}

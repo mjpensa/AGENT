@@ -1,0 +1,34 @@
+{
+  "wakeWord": {
+    "model": "hey_jarvis",
+    "threshold": 0.3
+  },
+  "audio": {
+    "sampleRate": 16000,
+    "silenceThreshold": "1.5%",
+    "silenceTimeout": 1.5,
+    "maxRecordingSeconds": 15,
+    "preRollSeconds": 1.5,
+    "vadThreshold": 0.015
+  },
+  "stt": {
+    "provider": "groq",
+    "groqModel": "whisper-large-v3-turbo",
+    "fallbackProvider": "local",
+    "localModel": "small",
+    "temperature": 0.0
+  },
+  "llm": {
+    "maxSessionTurns": 25,
+    "sessionKeepAliveMinutes": 5
+  },
+  "tts": {
+    "command": "say",
+    "voice": "Samantha",
+    "rate": 190
+  },
+  "conversation": {
+    "followUpTimeout": 4.5,
+    "maxFollowUpTurns": 5
+  }
+}
