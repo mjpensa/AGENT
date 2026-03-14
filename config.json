@@ -1,6 +1,6 @@
 {
   "wakeWord": {
-    "model": "hey_jarvis",
+    "model": "models/hey_claude.onnx",
     "threshold": 0.3
   },
   "audio": {
@@ -19,6 +19,8 @@
     "temperature": 0.0
   },
   "llm": {
+    "model": "claude-sonnet-4-6",
+    "maxTokens": 300,
     "maxSessionTurns": 25,
     "sessionKeepAliveMinutes": 5
   },

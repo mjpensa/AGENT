@@ -48,9 +48,13 @@ function ensureSession() {
     console.log(`  [session] Rotated after ${turnCount} turns`);
   }
 
+  const model = CONFIG.llm.model || "claude-sonnet-4-6";
   session = unstable_v2_createSession({
+    model,
     permissionMode: "bypassPermissions",
+    allowDangerouslySkipPermissions: true,
   });
+  console.log(`  [session] Model: ${model}`);
   turnCount = 0;
   console.log("  [session] Created new Claude session");
 }
@@ -243,7 +247,7 @@ function startWakeListener() {
       if (msg === "READY") {
         console.log("  [wake] Model loaded");
       } else if (msg === "LISTENING") {
-        console.log("\n🎤 Ready — say \"Hey Jarvis\" to activate\n");
+        console.log("\n🎤 Ready — say \"Hey Claude\" to activate\n");
         resolve();
       } else if (msg.startsWith("LOADING")) {
         console.log(`  [wake] Loading model: ${msg.split(" ")[1]}`);
@@ -383,7 +387,7 @@ async function handleAudioReady(wavPath) {
 
 async function main() {
   console.log("╔══════════════════════════════════════╗");
-  console.log("║      Jarvis Voice Assistant v2.0     ║");
+  console.log("║     Claude Voice Assistant v2.1      ║");
   console.log("╚══════════════════════════════════════╝\n");
 
   // Pre-warm Claude session
@@ -411,7 +415,7 @@ function cleanup() {
     wakeProcess = null;
   }
   try { session?.close(); } catch {}
-  try { unlinkSync("/tmp/jarvis-utterance.wav"); } catch {}
+  try { unlinkSync("/tmp/claude-utterance.wav"); } catch {}
   console.log("[shutdown] Done");
   process.exit(0);
 }

@@ -35,7 +35,7 @@ STATE_IDLE = "idle"
 STATE_RECORDING = "recording"
 STATE_FOLLOW_UP = "follow_up"
 
-WAV_PATH = "/tmp/jarvis-utterance.wav"
+WAV_PATH = "/tmp/claude-utterance.wav"
 
 
 class ListenerState:
@@ -54,7 +54,7 @@ class ListenerState:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", default="hey_jarvis")
+    parser.add_argument("--model", default="hey_claude")
     parser.add_argument("--threshold", type=float, default=0.5)
     parser.add_argument("--cooldown", type=float, default=2.0)
     parser.add_argument("--pre-roll", type=float, default=1.5, help="Pre-roll buffer seconds")
@@ -64,9 +64,13 @@ def main():
     parser.add_argument("--max-recording", type=float, default=15.0, help="Max recording seconds")
     args = parser.parse_args()
 
-    # Load wake word model
+    # Load wake word model — supports both built-in names and custom .onnx paths
     print(f"LOADING {args.model}", flush=True)
-    oww = Model(wakeword_models=[args.model], inference_framework="onnx")
+    model_path = args.model
+    if model_path.endswith(".onnx"):
+        import os
+        model_path = os.path.abspath(model_path)
+    oww = Model(wakeword_models=[model_path], inference_framework="onnx")
     print("READY", flush=True)
 
     # Audio config: 16kHz mono, 80ms chunks (1280 samples)
